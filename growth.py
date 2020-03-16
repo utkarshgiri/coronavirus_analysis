@@ -13,7 +13,8 @@ frame.sort_values(by=frame.columns[-1], ascending=False, inplace=True)
 
 def country(name, lastndays=12, plot=False):
     time = numpy.arange(lastndays)
-    cumulative = frame[frame['Country/Region'] == name].values.squeeze()[-lastndays:]
+    cumulative = numpy.array(frame[frame['Country/Region'] == name].values.squeeze()[-lastndays:], dtype=numpy.float64)
+    print(cumulative)
     slope, intercept, r, _, _ = stats.linregress(numpy.arange(lastndays), numpy.log(cumulative[-lastndays:]))
     print('{}:\n\nGrowth rate : {},\nDoubling time: {} days,\nr : {}\n'.format(name, slope, numpy.log(2)/slope, r))
     if plot:
